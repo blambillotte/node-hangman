@@ -1,0 +1,22 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "Hangman Game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blambillotte/node-hangman.git"
+  },
+  "author": "Ben Lambillotte",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blambillotte/node-hangman/issues"
+  },
+  "homepage": "https://github.com/blambillotte/node-hangman#readme",
+  "dependencies": {
+    "figlet": "^1.2.0"
+  }
+}
