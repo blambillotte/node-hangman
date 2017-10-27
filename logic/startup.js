@@ -1,4 +1,5 @@
 const figlet = require('figlet');
+const colors = require('colors');
 
 const displayStartupText = function() {
   figlet('Hangman', function(err, data) {
@@ -7,7 +8,7 @@ const displayStartupText = function() {
       console.dir(err);
       return;
     }
-    console.log(data)
+    console.log(data.green)
   });
 }
 

@@ -1,35 +1,64 @@
 const startupText = require('./logic/startup');
 const config = require('./config/config');
+const colors = require('colors');
+const inquirer = require('inquirer');
 const Game = require('./logic/game_constructor');
-const GuessWord = require('./logic/guess_word');
-
+const Word = require('./logic/guess_word');
 
 //Display Startup Text
 startupText();
 
-//console.log(config.wordsToGuess);
-
+//Create a new Game object, set all values to 0
 const game = new Game(0, 0, 0);
 
-//console.log(game);
+//Create a new word to guess
+const word1 = new Word(config.wordsToGuess[0], config.maxWrongGuesses);
 
-const word1 = new GuessWord(config.wordsToGuess[0], config.maxWrongGuesses);
-
-
-//console.log(word1.hintString());
-
+//Create the hint string
 word1.createHintArr();
-console.log(word1.displayString());
-console.log('\n');
 
-console.log(word1);
+//Wait half a seccond and print the direcitons
+setTimeout(function(){
+  console.log(config.directions);
+}, 500);
+
+//Dislay Hint String of the Guess Word
+// setTimeout(function(){
+// }, 1000);
 
 
-// function checkGuess(guess) {
-//   for (var i = 0; i < this.hintArr.length; i++) {
-//     console.log(this.hintArr[i].value);
-//   }
-// }
+function askUser() {
 
-word1.checkGuess('r');
-console.log(word1.displayString());
+  //Show Word to Guess
+  console.log(`   Word to Guess: ${word1.displayString()} \n`.magenta.bold);
+
+  inquirer.prompt([
+    {
+      name: "letterGuess",
+      message: "Guess a Letter: "
+    }
+  ]).then(function(answer) {
+    //console.log(answer);
+    word1.checkGuess(answer.letterGuess);
+
+    word1.isWordGuessed();
+
+    //Recursive loop until game over, or word guessed
+    if (word1.wrongGuessCount < word1.maxWrongGuesses && !word1.isWordGuessed()) {
+      setTimeout(askUser, 500);
+      console.log('________________\n')
+    } else if (word1.isWordGuessed()) {
+      console.log(`\n You guessed it! The word was: ${word1.currentWord} \n`);
+      console.log('--------- GAME OVER ----------');
+
+    } else {
+      console.log(`\n Oh no! You're out of guesses, the word was: ${word1.currentWord} \n`);
+      console.log('--------- GAME OVER ----------');
+    }
+
+    });
+};
+
+
+//After a second, ask for the reponses when app starts
+setTimeout(askUser, 1000);

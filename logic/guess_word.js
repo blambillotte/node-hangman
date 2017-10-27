@@ -1,5 +1,7 @@
+const colors = require('colors');
 
-const GuessWord = function(currentWord, maxWrongGuesses) {
+
+const Word = function(currentWord, maxWrongGuesses) {
   this.currentWord = currentWord;
   this.wordToLowercase = currentWord.toLowerCase();
   this.maxWrongGuesses = maxWrongGuesses;
@@ -7,7 +9,7 @@ const GuessWord = function(currentWord, maxWrongGuesses) {
 }
 
 
-GuessWord.prototype.createHintArr = function() {
+Word.prototype.createHintArr = function() {
   const word = this.currentWord;
   let hintArray = [];
 
@@ -25,7 +27,7 @@ GuessWord.prototype.createHintArr = function() {
   this.hintArray = hintArray;
 }
 
-GuessWord.prototype.displayString = function() {
+Word.prototype.displayString = function() {
   let guessString = [];
 
   for (let letter in this.hintArray) {
@@ -40,21 +42,21 @@ GuessWord.prototype.displayString = function() {
   return guessString.join(' ');
 }
 
-GuessWord.prototype.checkGuess = function(g) {
+Word.prototype.checkGuess = function(g) {
   const guess = g.toLowerCase();
 
   if (this.wordToLowercase.includes(guess)) {
-    console.log('It includes the guess!!')
+    console.log('\n Correct Guess!'.green)
     this.updateWasGuessed(guess);
 
   } else {
-    console.log('Guessed Wrong');
+    console.log('\n Guessed Wrong'.red);
     this.wrongGuessCount++;
   }
 
 }
 
-GuessWord.prototype.updateWasGuessed = function(guess) {
+Word.prototype.updateWasGuessed = function(guess) {
 
   for (let i = 0; i < this.hintArray.length; i++) {
 
@@ -62,7 +64,20 @@ GuessWord.prototype.updateWasGuessed = function(guess) {
       this.hintArray[i].wasGuessed = true;
     }
   }
-  //console.log(this.hintArray);
+}
+
+
+
+Word.prototype.isWordGuessed = function() {
+
+  const guessedArr = [];
+  for (let i = 0; i < this.hintArray.length; i++) {
+    guessedArr.push(this.hintArray[i].wasGuessed);
+  }
+
+  //Return true if the full word is guessed
+  return guessedArr.every(Boolean);
+
 }
 
 
@@ -75,4 +90,4 @@ const Letter = function(placeholder, value, isLetter) {
 
 
 
-module.exports = GuessWord;
+module.exports = Word;
