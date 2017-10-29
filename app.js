@@ -20,7 +20,7 @@ word1.createHintArr();
 
 //Wait half a seccond and print the direcitons
 setTimeout(function(){
-  console.log(config.directions);
+  console.log(config.directions.bold);
 }, 500);
 
 //Dislay Hint String of the Guess Word
@@ -55,12 +55,13 @@ function askUser() {
     if (word1.wrongGuessCount < word1.maxWrongGuesses && !word1.isWordGuessed()) {
       setTimeout(askUser, 500);
       console.log('________________\n')
+
     } else if (word1.isWordGuessed()) {
-      console.log(`\n You guessed it! The word was: ${word1.currentWord.magenta} \n`);
+      console.log(`\n You guessed it! The word was: ${word1.currentWord.magenta.bold} \n`);
       console.log('--------- GAME OVER ----------');
 
     } else {
-      console.log(`\n Oh no! You're out of guesses, the word was: ${word1.currentWord.magenta} \n`);
+      console.log(`\n Oh no! You're out of guesses, the word was: ${word1.currentWord.magenta.bold} \n`);
       console.log('--------- GAME OVER ----------');
     }
 

@@ -46,11 +46,11 @@ Word.prototype.checkGuess = function(g) {
   const guess = g.toLowerCase();
 
   if (this.wordToLowercase.includes(guess)) {
-    console.log('\n Correct Guess!'.green)
+    console.log('\n Correct Guess!'.green.bold)
     this.updateWasGuessed(guess);
 
   } else {
-    console.log('\n Guessed Wrong'.red);
+    console.log('\n Guessed Wrong'.red.bold);
     this.wrongGuessCount++;
   }
 
