@@ -50,8 +50,9 @@ Word.prototype.checkGuess = function(g) {
     this.updateWasGuessed(guess);
 
   } else {
-    console.log('\n Guessed Wrong'.red.bold);
     this.wrongGuessCount++;
+    const guessesLeft = this.maxWrongGuesses - this.wrongGuessCount;
+    console.log('\n Guessed Wrong'.red.bold,`${guessesLeft} ${(guessesLeft == 1 ? 'Guess Left' : 'Guesses Left')}`.blue);
   }
 
 }
