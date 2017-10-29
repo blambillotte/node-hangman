@@ -1,5 +1,6 @@
 const startupText = require('./logic/startup');
 const config = require('./config/config');
+const getRandomIndex = require('./logic/randomizer');
 const colors = require('colors');
 const inquirer = require('inquirer');
 const Game = require('./logic/game_constructor');
@@ -12,7 +13,7 @@ startupText();
 const game = new Game(0, 0, 0);
 
 //Create a new word to guess
-const word1 = new Word(config.wordsToGuess[0], config.maxWrongGuesses);
+const word1 = new Word(getRandomIndex(config.wordsToGuess), config.maxWrongGuesses);
 
 //Create the hint string
 word1.createHintArr();
@@ -35,7 +36,14 @@ function askUser() {
   inquirer.prompt([
     {
       name: "letterGuess",
-      message: "Guess a Letter: "
+      message: "Guess a Letter: ",
+      validate: function (value) {
+        if (value.length === 1) {
+          return true;
+        }
+
+        return 'Please guess one letter at a time';
+      }
     }
   ]).then(function(answer) {
     //console.log(answer);
@@ -48,11 +56,11 @@ function askUser() {
       setTimeout(askUser, 500);
       console.log('________________\n')
     } else if (word1.isWordGuessed()) {
-      console.log(`\n You guessed it! The word was: ${word1.currentWord} \n`);
+      console.log(`\n You guessed it! The word was: ${word1.currentWord.magenta} \n`);
       console.log('--------- GAME OVER ----------');
 
     } else {
-      console.log(`\n Oh no! You're out of guesses, the word was: ${word1.currentWord} \n`);
+      console.log(`\n Oh no! You're out of guesses, the word was: ${word1.currentWord.magenta} \n`);
       console.log('--------- GAME OVER ----------');
     }
 

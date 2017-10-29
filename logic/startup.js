@@ -8,7 +8,7 @@ const displayStartupText = function() {
       console.dir(err);
       return;
     }
-    console.log(data.green)
+    console.log(data.green);
   });
 }
 

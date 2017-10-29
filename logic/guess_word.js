@@ -16,11 +16,11 @@ Word.prototype.createHintArr = function() {
   //Create an Array of Blanks and Spaces to represent the visual Hangman "Hint" for the Word/Phrase
   for (let i = 0; i < word.length; i++) {
     if (word[i] !== ' ') {
-      let letter = new Letter('_', word[i].toLowerCase(), true);
+      let letter = new Letter('_', word[i], true);
       hintArray.push(letter);
 
     } else {
-      let letter = new Letter(' ', word[i].toLowerCase(), false);
+      let letter = new Letter(' ', word[i], false);
       hintArray.push(letter);
     }
   }
@@ -32,7 +32,7 @@ Word.prototype.displayString = function() {
 
   for (let letter in this.hintArray) {
     if (this.hintArray[letter].wasGuessed) {
-      guessString.push(this.hintArray[letter].value);
+      guessString.push(this.hintArray[letter].displayValue);
 
     } else {
       guessString.push(this.hintArray[letter].placeholder);
@@ -81,9 +81,10 @@ Word.prototype.isWordGuessed = function() {
 }
 
 
-const Letter = function(placeholder, value, isLetter) {
+const Letter = function(placeholder, displayValue, isLetter) {
   this.placeholder = placeholder;
-  this.value = value;
+  this.displayValue = displayValue;
+  this.value = displayValue.toLowerCase();
   this.isLetter = isLetter;
   this.wasGuessed = false;
 }
